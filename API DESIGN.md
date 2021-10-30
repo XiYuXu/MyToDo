@@ -2,11 +2,14 @@
 
 ### 关于用户（user）
 
-| 所用方法 |       url       |           请求参数           |  返回参数   |              描述              |    控制器名    |
-| :------: | :-------------: | :--------------------------: | :---------: | :----------------------------: | :------------: |
-|   post   | /user/{user_id} |       user_id password       | status_code |        判断能否登录成功        |   verifyUser   |
-|   put    |      /user      | user_id password name avatar | status_code |          更新用户信息          | updateUserById |
-|   get    | /user/{user_id} |            token             |  user_data  | 根据所提交的用户id获取用户信息 |  getUserById   |
+| 所用方法 |       url       |           请求参数           |  返回参数   |              描述              |    控制器名    | 完成 |
+| :------: | :-------------: | :--------------------------: | :---------: | :----------------------------: | :------------: | ---- |
+|   post   |   /user/login   |       user_id password       | status_code |        判断能否登录成功        |   verifyUser   |      |
+|   put    |      /user      | user_id password name avatar | status_code |          更新用户信息          | updateUserById | 1    |
+|   get    | /user/{user_id} |            token             |  user_data  | 根据所提交的用户id获取用户信息 |  getUserById   | 1    |
+|   post   |      /user      |          User user           | status_code |            插入用户            |   insertUser   | 1    |
+
+
 
 ### 关于任务（task）
 
