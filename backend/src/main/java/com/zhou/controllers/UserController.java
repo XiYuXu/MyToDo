@@ -34,6 +34,7 @@ public class UserController {
 
     @PostMapping("/user/login")
     public void verifyUser(@RequestBody Map<String,Object> map){
+        System.out.println(map);
         if(userService.verifyUser(map)){
             System.out.println("login success");
         }else{
