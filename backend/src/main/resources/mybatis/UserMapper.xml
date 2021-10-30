@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.mapper.UserMapper">
+    <select id="getUserList" resultMap="getUser">
+        select * from user
+    </select>
+    <select id="getUserByUserName" resultMap="getUser">
+        select * from user where userName like #{userName}
+    </select>
+    <resultMap id="getUser" type="com.zhou.pojo.User">
+        <id property="userId" column="user_id"></id>
+    </resultMap>
+
+    <select id="getUserById" resultMap="getUser">
+        select user_id,userName,password,avatar from user where user_id=#{id}
+    </select>
+
+    <insert id="insertUser" parameterType="com.zhou.pojo.User">
+        insert user(user_id,userName,password,avatar) values(#{userId},#{userName},#{password},#{avatar})
+    </insert>
+
+    <update id="updateUserById" parameterType="map">
+            update user
+            <set>
+                <if test="userName != null">userName=#{userName},</if>
+                <if test="password != null">password=#{password},</if>
+                <if test="avatar != null">avatar=#{avatar},</if>
+            </set>
+            where user_id=#{userId}
+    </update>
+</mapper>
