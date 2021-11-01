@@ -21,7 +21,7 @@
         insert user(user_id,userName,password,avatar) values(#{userId},#{userName},#{password},#{avatar})
     </insert>
 
-    <update id="updateUserById" parameterType="map">
+    <update id="updateUser" parameterType="map">
             update user
             <set>
                 <if test="userName != null">userName=#{userName},</if>

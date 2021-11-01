@@ -16,6 +16,5 @@ public class TaskList {
     private String title;       //任务集标题
     private String description; //任务集描述
     private boolean deleted;    //是否被删除
-    private int fatherListId;   //父级任务ID
     private int userId;         //所属用户ID
 }

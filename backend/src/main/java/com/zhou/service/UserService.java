@@ -2,9 +2,11 @@ package com.zhou.service;
 
 import com.zhou.mapper.UserMapper;
 import com.zhou.pojo.User;
+import com.zhou.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.rmi.CORBA.Util;
 import java.util.List;
 import java.util.Map;
 
@@ -23,23 +25,31 @@ public class UserService {
         return user;
     }
 
-    public int insertUser(User user) {
-        userMapper.insertUser(user);
-        return 1;
-    }
-    public int updateUserById(Map<String,Object> map){
-        userMapper.updateUserById(map);
-        return 1;
-    }
-
-    public boolean verifyUser(Map<String,Object> map){
-        User resultUser = userMapper.getUserByUserName((String)map.get("userName"));
-        if(map.get("userName").equals(resultUser.getUserName())){
-            if(map.get("password").equals(resultUser.getPassword())){
-                return true;
-            }
+    public boolean insertUser(User user) {
+        //用户信息不全
+        if(UserUtil.wrongUser(user)){
+            return false;
+        }
+        if(userMapper.insertUser(user)>0){
+            return true;
         }
         return false;
     }
 
+    public boolean updateUser(Map<String,Object> map){
+        if(userMapper.updateUser(map)>0){
+            return true;
+        }
+        return false;
+    }
+
+    public User verifyUser(Map<String,Object> map){
+        User resultUser = userMapper.getUserByUserName((String)map.get("userName"));
+        if(map.get("userName").equals(resultUser.getUserName())){
+            if(map.get("password").equals(resultUser.getPassword())){
+                return resultUser;
+            }
+        }
+        return null;
+    }
 }

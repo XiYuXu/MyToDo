@@ -12,5 +12,5 @@ public interface UserMapper {
     User getUserById(int id);
     User getUserByUserName(String userName);
     int insertUser(User user);
-    int updateUserById(Map<String,Object> map);
+    int updateUser(Map<String,Object> map);
 }

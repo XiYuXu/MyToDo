@@ -12,33 +12,32 @@ import java.util.Map;
 public class UserController {
     @Autowired
     UserService userService;
-
+    //获取所有用户
     @GetMapping("/users")
     public List<User> showUser(){
         return userService.getUser();
     }
-    @GetMapping("/user/{id}")
-    public User getUserById(@PathVariable("id") int id){
-        return userService.getUserById(id);
+
+    //根据用户id获取用户
+    @GetMapping("/user/{userId}")
+    public User getUserById(@PathVariable("userId") int userId){
+        return userService.getUserById(userId);
     }
 
+    //新增一个用户
     @PostMapping("/user")
-    public int addUser(User newUser){
-        int status_code = userService.insertUser(newUser);
-        return status_code;
+    public boolean addUser(@RequestBody User newUser){
+        return userService.insertUser(newUser);
     }
-    @PutMapping("/user/{id}")
-    public void  updateUser(@PathVariable("id") int id, @RequestBody Map<String,Object> map){
-        userService.updateUserById(map);
+
+    //修改用户信息
+    @PutMapping("/user")
+    public boolean  updateUser(@RequestBody Map<String,Object> map){
+        return userService.updateUser(map);
     }
 
     @PostMapping("/user/login")
-    public void verifyUser(@RequestBody Map<String,Object> map){
-        System.out.println(map);
-        if(userService.verifyUser(map)){
-            System.out.println("login success");
-        }else{
-            System.out.println("login failure");
-        }
+    public User verifyUser(@RequestBody Map<String,Object> map){
+        return userService.verifyUser(map);
     }
 }
