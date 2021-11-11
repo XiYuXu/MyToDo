@@ -2,12 +2,13 @@
 
 ### 关于用户（User）
 
-| 所用方法 |      url       |          请求参数           |  返回参数   |              描述              |    控制器名    | 完成 |
-| :------: | :------------: | :-------------------------: | :---------: | :----------------------------: | :------------: | ---- |
-|   post   |  /user/login   |       userId password       | status_code |        判断能否登录成功        |   verifyUser   | 1    |
-|   put    |     /user      | userId password name avatar | status_code |          更新用户信息          | updateUserById | 1    |
-|   get    | /user/{userId} |            token            |  user_data  | 根据所提交的用户id获取用户信息 |  getUserById   | 1    |
-|   post   |     /user      |          User user          | status_code |            插入用户            |   insertUser   | 1    |
+| 所用方法 |        url        |               请求参数               | 返回参数  |         描述          |    控制器名    | 完成 |
+| :------: | :---------------: | :----------------------------------: | :-------: | :-------------------: | :------------: | ---- |
+|   post   |      /login       |           userId password            |  boolean  |   判断能否登录成功    |   verifyUser   | 1    |
+|   put    | /settings/profile | userName\|password\|nickName\|avatar |  boolean  |     更新用户信息      |   updateUser   | 1    |
+|   get    |   /user/profile   |           token中的userId            | user_data | 根据token获取用户信息 | getUserProfile | 1    |
+|   post   |       /new        |       token的userId，User user       |  boolean  |       插入用户        |   insertUser   | 1    |
+|   post   |   /setPassword    |       token中的userId，新密码        |  boolean  |       修改密码        |  setPassword   | 1    |
 
 
 

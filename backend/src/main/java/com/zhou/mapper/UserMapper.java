@@ -8,9 +8,10 @@ import java.util.Map;
 
 @Mapper
 public interface UserMapper {
-    List<User> getUserList();
-    User getUserById(int id);
+    List<User> getAllUsers();
+    User getUserByUserId(int id);
     User getUserByUserName(String userName);
     int insertUser(User user);
     int updateUser(Map<String,Object> map);
+    boolean updatePassword(Map<String,Object> map);
 }

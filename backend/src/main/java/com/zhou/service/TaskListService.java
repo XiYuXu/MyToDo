@@ -1,5 +1,6 @@
 package com.zhou.service;
 
+import cn.dev33.satoken.stp.StpUtil;
 import com.zhou.mapper.TaskListMapper;
 import com.zhou.pojo.TaskList;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,21 @@ import java.util.List;
  **/
 @Service
 public class TaskListService {
-    @Autowired
+
     TaskListMapper taskListMapper;
+    public TaskListService(TaskListMapper taskListMapper){
+        this.taskListMapper = taskListMapper;
+    }
 
     public List<TaskList> getOwnTaskList() {
-        return taskListMapper.getOwnTaskList();
+        if(StpUtil.isLogin()) {
+            int userId = Integer.parseInt(StpUtil.getLoginId().toString());
+            return taskListMapper.getOwnTaskList(userId);
+        }
+        return null;
+    }
+
+    public List<TaskList> getAllTaskLists() {
+        return taskListMapper.getAllTaskLists();
     }
 }

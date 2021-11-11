@@ -37,4 +37,11 @@ public class TaskController {
     public Task updateTask(@PathVariable("userId") int userId,@RequestBody Map<String,Object>map){
         return null;
     }
+
+
+    //移动任务
+    @PostMapping("/{userId}/task/{taskId}/{fromTaskListId}/{toTaskListId}")
+    public boolean moveTask(@PathVariable("userId")int userId,@PathVariable("taskId")int taskId,@PathVariable("fromTaskListId")int fromTaskListId,@PathVariable("toTaskListId")int toTaskListId){
+        return true;
+    }
 }

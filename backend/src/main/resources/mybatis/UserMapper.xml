@@ -3,31 +3,44 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zhou.mapper.UserMapper">
-    <select id="getUserList" resultMap="getUser">
+    <!--对应函数对应方法-->
+    <select id="getAllUsers" resultMap="getUser">
         select * from user
     </select>
-    <select id="getUserByUserName" resultMap="getUser">
-        select * from user where userName like #{userName}
-    </select>
-    <resultMap id="getUser" type="com.zhou.pojo.User">
-        <id property="userId" column="user_id"></id>
-    </resultMap>
 
-    <select id="getUserById" resultMap="getUser">
-        select user_id,userName,password,avatar from user where user_id=#{id}
+    <select id="getUserByUserId" resultMap="getUser">
+        select user_id,user_name,nick_name,password,avatar from user where user_id=#{id}
+    </select>
+    <select id="getUserByUserName" resultMap="getUser">
+        select user_id,user_name,nick_name,password,avatar from user where user_name like #{userName}
     </select>
 
     <insert id="insertUser" parameterType="com.zhou.pojo.User">
-        insert user(user_id,userName,password,avatar) values(#{userId},#{userName},#{password},#{avatar})
+        insert user(user_name,nick_name,password,avatar) values(#{userName},#{nickName},#{password},#{avatar})
     </insert>
-
+    <!--修改用户信息-->
     <update id="updateUser" parameterType="map">
-            update user
-            <set>
-                <if test="userName != null">userName=#{userName},</if>
-                <if test="password != null">password=#{password},</if>
-                <if test="avatar != null">avatar=#{avatar},</if>
-            </set>
-            where user_id=#{userId}
+        update user
+        <set>
+            <if test="userName != null">user_name=#{userName},</if>
+            <if test="nickName != null">nick_name=#{nickName},</if>
+            <if test="avatar != null">avatar=#{avatar},</if>
+        </set>
+        where user_id=#{userId}
     </update>
+    <!--修改密码-->
+    <update id="updatePassword" parameterType="map">
+        update user
+        set password=#{newPassword}
+        where user_id=#{userId}
+    </update>
+    <!--返回类型-->
+    <resultMap id="getUser" type="com.zhou.pojo.User">
+        <id property="userId" column="user_id"></id>
+        <id property="userName" column="user_name"></id>
+        <id property="nickName" column="nick_name"></id>
+    </resultMap>
+
+
+
 </mapper>

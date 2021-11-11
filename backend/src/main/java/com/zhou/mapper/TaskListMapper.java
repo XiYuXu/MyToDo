@@ -8,5 +8,7 @@ import java.util.List;
 @Mapper
 public interface TaskListMapper {
 
-    List<TaskList> getOwnTaskList();
+    List<TaskList> getAllTaskLists();
+
+    List<TaskList> getOwnTaskList(int userId);
 }
