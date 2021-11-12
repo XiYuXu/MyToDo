@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @ClassName TaskListService
@@ -23,6 +24,10 @@ public class TaskListService {
         this.taskListMapper = taskListMapper;
     }
 
+    //获取所有的任务集合
+    public List<TaskList> getAllTaskLists() {
+        return taskListMapper.getAllTaskLists();
+    }
     public List<TaskList> getOwnTaskList() {
         if(StpUtil.isLogin()) {
             int userId = Integer.parseInt(StpUtil.getLoginId().toString());
@@ -31,7 +36,28 @@ public class TaskListService {
         return null;
     }
 
-    public List<TaskList> getAllTaskLists() {
-        return taskListMapper.getAllTaskLists();
+
+
+    //添加新任务集
+    public boolean addTaskList(Map<String, Object> map) {
+        if(StpUtil.isLogin()) {
+            int userId = Integer.parseInt(StpUtil.getLoginId().toString());
+            map.put("userId",userId);
+            return  taskListMapper.addTaskList(map);
+        }
+        return false;
+    }
+
+    public boolean updateTaskList(Map<String, Object> map) {
+        if(StpUtil.isLogin()) {
+            int userId = Integer.parseInt(StpUtil.getLoginId().toString());
+            map.put("userId",userId);
+            return  taskListMapper.updateTaskList(map);
+        }
+        return false;
+    }
+
+    public boolean deleteTaskList(int taskListId) {
+        return taskListMapper.deleteTaskList(taskListId);
     }
 }

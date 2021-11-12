@@ -23,38 +23,34 @@ public class TaskListController {
     public TaskListController(TaskListService taskListService){
         this.taskListService = taskListService;
     }
-    //获取用户所有的自定义任务集
-    @GetMapping("/OwnTaskList")
-    public List<TaskList> getOwnTaskList() {
-        return taskListService.getOwnTaskList();
-    }
+
+    //获取所有的自定义任务集
     @GetMapping("/AllTaskLists")
     public List<TaskList> getAllTaskLists() {
         return taskListService.getAllTaskLists();
     }
-
-    //获取用户所有计划
-    @GetMapping("/plans")
-    public List<TaskList> getPlans(@PathVariable("userId") int userId) {
-        return null;
+    //获取用户自定义任务集
+    @GetMapping("/OwnTaskList")
+    public List<TaskList> getOwnTaskList() {
+        return taskListService.getOwnTaskList();
     }
 
-    //添加一个新的空任务列表
+    //添加一个新的任务列表
     @PostMapping("/TaskList/new")
-    public boolean addTaskList(@PathVariable("userId") int userId,@RequestBody Map<String,Object> map) {
-        return true;
+    public boolean addTaskList(@RequestBody Map<String,Object> map) {
+        return taskListService.addTaskList(map);
     }
 
     //修改任务列表
-    @PutMapping("/taskList/update")
-    public boolean updateTaskList(@PathVariable("userId") int userId,@RequestBody Map<String,Object> map){
-        return true;
+    @PutMapping("/TaskList/update")
+    public boolean updateTaskList(@RequestBody Map<String,Object> map){
+        return taskListService.updateTaskList(map);
     }
 
     //删除任务列表(应为级联删除)
-    @DeleteMapping("/taskList/{taskList_id}/delete")
-    public boolean deleteTaskList(@PathVariable("userId") int userId,@PathVariable("taskListId")int taskListId){
-        return true;
+    @DeleteMapping("/TaskList/delete")
+    public boolean deleteTaskList(@RequestBody Map<String,Object> map){
+        return taskListService.deleteTaskList((int)map.get("taskListId"));
     }
 }
 
