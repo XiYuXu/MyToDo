@@ -41,13 +41,13 @@ public class PlanController {
 
     //修改计划
     @PutMapping("/Plan/update")
-    public boolean updatePlan(@PathVariable("userId") int userId,@RequestBody Map<String,Object> map){
-        return true;
+    public boolean updatePlan(@RequestBody Map<String,Object> map){
+        return planService.updatePlan(map);
     }
 
     //删除计划(应为级联删除)
-    @DeleteMapping("/plan/{Plan_id}/delete")
-    public boolean deletePlan(@PathVariable("userId") int userId,@PathVariable("planId")int PlanId){
-        return true;
+    @DeleteMapping("/plan/delete")
+    public boolean deletePlan(@RequestBody Map<String,Object> map){
+        return planService.deletePlan(map);
     }
 }

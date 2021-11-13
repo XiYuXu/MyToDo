@@ -37,7 +37,7 @@
     <!--删除任务集合-->
     <delete id="deleteTaskList">
         delete from taskList
-        where task_list_id = #{taskListId}
+        where user_id=#{userId} and task_list_id = #{taskListId}
     </delete>
 
 </mapper>

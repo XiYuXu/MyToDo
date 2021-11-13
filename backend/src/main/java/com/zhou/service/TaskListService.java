@@ -57,7 +57,16 @@ public class TaskListService {
         return false;
     }
 
-    public boolean deleteTaskList(int taskListId) {
-        return taskListMapper.deleteTaskList(taskListId);
+    public boolean deleteTaskList(Map<String, Object> map) {
+        //先删除计划表中的任务集合
+
+
+
+        if(StpUtil.isLogin()) {
+            int userId = Integer.parseInt(StpUtil.getLoginId().toString());
+            map.put("userId",userId);
+            return  taskListMapper.deleteTaskList(map);
+        }
+        return false;
     }
 }

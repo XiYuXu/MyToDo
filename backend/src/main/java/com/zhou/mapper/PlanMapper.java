@@ -17,5 +17,6 @@ public interface PlanMapper {
 
     boolean updatePlan(Map<String, Object> map);
 
-    boolean deletePlan(int planId);
+    boolean deletePlan(Map<String, Object> map);
+
 }

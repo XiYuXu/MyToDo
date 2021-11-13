@@ -17,5 +17,5 @@ public interface TaskListMapper {
 
     boolean updateTaskList(Map<String, Object> map);
 
-    boolean deleteTaskList(int taskListId);
+    boolean deleteTaskList(Map<String, Object> map);
 }

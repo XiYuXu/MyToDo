@@ -55,7 +55,18 @@ public class PlanService {
         return false;
     }
     //删除计划（级联删除）
-    public boolean deletePlan(int PlanId) {
-        return PlanMapper.deletePlan(PlanId);
+    public boolean deletePlan(Map<String,Object> map) {
+        //先删除计划表中的任务集合
+
+
+
+
+
+        if(StpUtil.isLogin()) {
+            int userId = Integer.parseInt(StpUtil.getLoginId().toString());
+            map.put("userId",userId);
+            return PlanMapper.deletePlan(map);
+        }
+       return false;
     }
 }

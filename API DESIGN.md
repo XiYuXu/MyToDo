@@ -14,19 +14,21 @@
 
 ### 关于任务集合（TaskList）
 
-| 所用方法 |              url               |    请求参数     |    返回参数    |                             描述                             |    控制器名    | 完成 |
-| :------: | :----------------------------: | :-------------: | :------------: | :----------------------------------------------------------: | :------------: | ---- |
-|   get    |          /OwnTaskList          | token中的userId | List<TaskList> |          根据所提交的用户id获取用户自定义的任务列表          |  getTaskLists  | 1    |
-|   post   |         /TaskList/new          |    TaskList     |    boolean     |                         新增任务列表                         |  addTaskList   | 1    |
-|   put    |        /TaskList/update        |    TaskList     |    boolean     | 用户提交描述一个任务列表的表单,可以提交到各个分类(由taskListId标识)中 | updateTaskList | 1    |
-|  delete  | /TaskList/{taskList_id}/delete |     task_id     |    boolean     |         根据删除的taskList_id删除taskList表中的数据          | deleteTaskList | 0    |
+| 所用方法 |              url               |    请求参数     |    返回参数    |               描述                |    控制器名    | 完成 |
+| :------: | :----------------------------: | :-------------: | :------------: | :-------------------------------: | :------------: | ---- |
+|   get    |          /OwnTaskList          | token中的userId | List<TaskList> | 根据token获取用户自定义的任务列表 | getOwnTaskList | 1    |
+|   post   |         /TaskList/new          |    TaskList     |    boolean     |           新增任务列表            |  addTaskList   | 1    |
+|   put    |        /TaskList/update        |    TaskList     |    boolean     |           更新任务列表            | updateTaskList | 1    |
+|  delete  | /TaskList/{taskList_id}/delete |     task_id     |    boolean     |           删除任务列表            | deleteTaskList | 1    |
 
 ### 关于计划
 
-| 所用方法 |    url    |    请求参数     |  返回参数   |                             描述                             |  控制器名   | 完成 |
-| :------: | :-------: | :-------------: | :---------: | :----------------------------------------------------------: | :---------: | ---- |
-|   get    |  /plans   | token中的userId | List<Plan>  |         根据用户id返回所提交的计划（任务的分层结构）         |  getPlans   | 0    |
-|   post   | /Plan/new |    TaskList     | stutus_code | 用户提交描述一个任务列表的表单,可以提交到各个分类(由taskListId标识)中 | addTaskList | 1    |
+| 所用方法 |     url      |    请求参数     |  返回参数  |                   描述                   |  控制器名  | 完成 |
+| :------: | :----------: | :-------------: | :--------: | :--------------------------------------: | :--------: | ---- |
+|   get    |   /OwnPlan   | token中的userId | List<Plan> |            获取用户自定义计划            | getOwnPlan | 1    |
+|   post   |  /Plan/new   |    TaskList     |  boolean   |                 新增计划                 |  addPlan   | 1    |
+|   put    | /Plan/update |    TaskList     |  boolean   | 更新计划的基础信息（未改变计划层级结构） | updatePlan | 1    |
+|  delete  | /Plan/delete |     task_id     |  boolean   |           删除计划（层级删除）           | deletePlan | 0    |
 
 ### 关于任务（Task）
 

@@ -50,7 +50,7 @@ public class TaskListController {
     //删除任务列表(应为级联删除)
     @DeleteMapping("/TaskList/delete")
     public boolean deleteTaskList(@RequestBody Map<String,Object> map){
-        return taskListService.deleteTaskList((int)map.get("taskListId"));
+        return taskListService.deleteTaskList(map);
     }
 }
 
