@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zhou.mapper.TaskMapper">
+    <resultMap id="TaskStruct" type="com.zhou.pojo.Task">
+        <id column="task_id" property="taskId"></id>
+        <id column="user_id" property="userId"></id>
+        <id column="father_task_id" property="fatherTaskId"></id>
+    </resultMap>
+    <!--查询所有的任务-->
+    <select id="getAllTasks" resultMap="TaskStruct">
+        select task_id,title,description,deleted,user_id,
+        from task
+    </select>
+    <!--查询个人全部任务-->
+    <select id="getOwnTask" resultMap="TaskStruct">
+        select task_id,title,description,deleted,user_id,father_task_id
+        from task
+        where user_id=#{userId}
+    </select>
+    <!--插入新的任务到某个taskList或者plan中-->
+    <insert id="addTask" parameterType="map">
+        insert into task(title,description,user_id,father_task_id) values (#{title},#{description},#{userId},#{fatherTaskId})
+    </insert>
+
+    <!--修改任务状态-->
+    <update id="updateTask" parameterType="map">
+        update task
+        <set>
+            <if test="title != null">title=#{title},</if>
+            <if test="description != null">description=#{description},</if>
+            <if test="deleted != null">deleted=#{deleted},</if>
+        </set>
+        where user_id=#{userId} and task_id=#{taskId}
+    </update>
+
+    <!--删除任务-->
+    <delete id="deleteTask">
+        delete from task
+        where user_id=#{userId} and (father_task_id = #{taskId} or task_id = #{taskId})
+    </delete>
+
+</mapper>

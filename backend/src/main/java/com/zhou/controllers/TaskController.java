@@ -1,6 +1,7 @@
 package com.zhou.controllers;
 
 import com.zhou.pojo.Task;
+import com.zhou.service.TaskService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,6 +9,17 @@ import java.util.Map;
 
 @RestController
 public class TaskController {
+    TaskService taskService;
+
+    public TaskController(TaskService taskService){
+        this.taskService = taskService;
+    }
+
+    @GetMapping
+    public List<Task> getAllTasks(){
+        return taskService.getAllTasks();
+    }
+
     //获取用户所有的任务
     @GetMapping("/{userId}/tasks/all")
     public List<Task> getAllTasks(@PathVariable("userId") int userId){
