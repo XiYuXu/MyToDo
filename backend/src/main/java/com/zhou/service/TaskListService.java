@@ -2,6 +2,7 @@ package com.zhou.service;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.zhou.mapper.TaskListMapper;
+import com.zhou.mapper.TaskMapper;
 import com.zhou.pojo.TaskList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,8 +21,10 @@ import java.util.Map;
 public class TaskListService {
 
     TaskListMapper taskListMapper;
-    public TaskListService(TaskListMapper taskListMapper){
+    TaskMapper taskMapper;
+    public TaskListService(TaskListMapper taskListMapper,TaskMapper taskMapper){
         this.taskListMapper = taskListMapper;
+        this.taskMapper = taskMapper;
     }
 
     //获取所有的任务集合
@@ -58,13 +61,14 @@ public class TaskListService {
     }
 
     public boolean deleteTaskList(Map<String, Object> map) {
-        //先删除计划表中的任务集合
-
-
-
         if(StpUtil.isLogin()) {
             int userId = Integer.parseInt(StpUtil.getLoginId().toString());
             map.put("userId",userId);
+            //先删除计划表中的任务集合
+            if(!taskMapper.deleteTaskByTaskListId(map)){
+                return false;
+            };
+            //再删除该列表
             return  taskListMapper.deleteTaskList(map);
         }
         return false;

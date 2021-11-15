@@ -24,4 +24,5 @@ public class Task {
     private LocalDateTime start_time; //开始时间
     private int taskListId; //所属任务集id
     private int planId; //所属计划Id
+    private int userId;
 }

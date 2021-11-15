@@ -7,29 +7,39 @@
         <id column="task_id" property="taskId"></id>
         <id column="task_list_id" property="taskListId"></id>
         <id column="plan_id" property="planId"></id>
+        <id column="end_time" property="end_time"></id>
+        <id column="start_time" property="start_time"></id>
+        <id column="user_id" property="userId"></id>
     </resultMap>
     <!--查询所有的任务-->
     <select id="getAllTasks" resultMap="TaskStruct">
-        select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id
+        select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id,user_id
         from task
     </select>
-    <!--查询某个taskList下全部任务-->
-    <select id="getTasksByTaskList" resultMap="TaskStruct">
-        select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id
+    <!--查询某个taskList,或某个plan下全部任务-->
+    <select id="getTasksByTaskListId" resultMap="TaskStruct">
+        select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id,user_id
         from task
-        where task_list_id=#{taskListId}
+        <where>
+            <if test="taskListId != null">
+             or task_list_id=#{taskListId}
+            </if>
+            <if test="planId != null">
+             or plan_id=#{planId}
+            </if>
+        </where>
     </select>
-    <!--查询某个Plan下全部任务-->
-    <select id="getTasksByPlan" resultMap="TaskStruct">
+    <!--查询今日任务-->
+    <select id="getTodayTasks" resultMap="TaskStruct">
         select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id
         from task
-        where plan_id=#{planId}
+        where user_id=#{userId} and TO_DAYS(end_time)=TO_DAYS(now())
     </select>
 
     <!--插入新的任务到某个taskList或者plan中-->
-    <insert id="addTask" parameterType="map">
-        insert into task(title,description,icon,end_time,start_time,plan_id,task_list_id)
-        values(#{title},#{description},#{icon},#{endTime},#{startTime},#{planId},#{taskListId})
+    <insert id="addTaskToTaskList" parameterType="map">
+        insert into task(title,description,icon,start_time,end_time,plan_id,task_list_id,user_id)
+        values(#{title},#{description},#{icon},now(),#{end_time},#{planId},#{taskListId},#{userId})
     </insert>
 
     <!--修改任务状态-->
@@ -38,11 +48,11 @@
         <set>
             <if test="title != null">title=#{title},</if>
             <if test="description != null">description=#{description},</if>
-            <if test="finished != null">deleted=#{finished},</if>
-            <if test="endTime != null">deleted=#{endTime},</if>
-            <if test="startTime != null">deleted=#{startTime},</if>
-            <if test="planId != null">deleted=#{planId},</if>
-            <if test="taskListId != null">deleted=#{taskListId},</if>
+            <if test="icon != null">icon=#{icon},</if>
+            <if test="finished != null">finished=#{finished},</if>
+            <if test="important != null">important=#{important},</if>
+            <if test="start_time != null">start_time=#{start_ime},</if>
+            <if test="end_time != null">end_time=#{end_time},</if>
         </set>
         where user_id=#{userId} and task_id=#{taskId}
     </update>
@@ -50,7 +60,28 @@
     <!--删除任务-->
     <delete id="deleteTask">
         delete from task
-        where taskListId=#{taskListId}
+        where user_id=#{userId} and task_id=#{taskId}
     </delete>
 
+    <!--移动任务-->
+    <update id="moveTask" parameterType="map">
+        update task
+        <set>
+            <if test="planId != null">plan_id=#{newPlanId},</if>
+            <if test="newTaskListId != null">task_list_id=#{newTaskListId},</if>
+        </set>
+        where user_id=#{userId} and task_id=#{taskId}
+    </update>
+
+    <!--删除taskList中的所有任务-->
+    <delete id="deleteTaskByTaskListId">
+        delete from task
+        where user_id=#{userId} and task_list_id=#{taskListId}
+    </delete>
+
+    <!--删除计划中的所有任务-->
+    <delete id="deleteTaskByPlanId">
+        delete from task
+        where user_id=#{userId} and plan_id=#{planId}
+    </delete>
 </mapper>

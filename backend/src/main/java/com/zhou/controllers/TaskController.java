@@ -2,6 +2,7 @@ package com.zhou.controllers;
 
 import com.zhou.pojo.Task;
 import com.zhou.service.TaskService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,41 +21,39 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    //获取某个taskList下所有的任务
-    @GetMapping("/tasks/{taskListName}")
-    public List<Task> getTasksByTaskListId() {
-
-        return null;
+    //获取某个taskList或plan下所有的任务
+    @GetMapping("/**/tasks")
+    public List<Task> getTasksByTaskListId(@RequestBody Map<String,Object> map) {
+        return taskService.getTasksByTaskListId(map);
     }
 
     //获取用户的今日任务
-    @GetMapping("/{userId}/tasks/today")
-    public List<Task> getTodayTasks(@PathVariable("userId") int userId){
-        return null;
+    @GetMapping("/today/tasks")
+    public List<Task> getTodayTasks(){
+        return taskService.getTodayTasks();
     }
-
-    //获取用户的某个任务集下的所有任务
-    @GetMapping("/{userId}/{taskListId}/tasks")
-    public List<Task> getTasksByTaskListId(@PathVariable("userId") int userId,@PathVariable("taskListId") int taskListId){
-        return null;
-    }
-
+    
     //添加任务到某个地方
-    @PostMapping("/{userId}/{taskListId}/task")
-    public boolean addTaskToTaskList(@PathVariable("userId") int userId,@PathVariable("taskListId") int taskListId,@RequestBody Map<String,Object> map){
-        return true;
+    @PostMapping("/**/task/new")
+    public boolean addTaskToTaskList(@RequestBody Map<String,Object> map){
+        map.put("description",map.get("start_time"));
+        return taskService.addTaskToTaskList(map);
     }
 
     //更新任务
-    @PutMapping("/{userId}/task/taskId")
-    public Task updateTask(@PathVariable("userId") int userId,@RequestBody Map<String,Object>map){
-        return null;
+    @PutMapping("/**/task/update")
+    public boolean updateTask(@RequestBody Map<String,Object> map){
+        return taskService.updateTask(map);
     }
-
-
     //移动任务
-    @PostMapping("/{userId}/task/{taskId}/{fromTaskListId}/{toTaskListId}")
-    public boolean moveTask(@PathVariable("userId")int userId,@PathVariable("taskId")int taskId,@PathVariable("fromTaskListId")int fromTaskListId,@PathVariable("toTaskListId")int toTaskListId){
-        return true;
+    @PostMapping("/**/task/move")
+    public boolean moveTask(@RequestBody Map<String,Object> map){
+        return taskService.moveTask(map);
     }
+    //删除任务
+    @DeleteMapping("/**/task/delete")
+    public boolean deleteTask(@RequestBody Map<String,Object> map){
+        return taskService.deleteTask(map);
+    }
+
 }

@@ -32,17 +32,14 @@
 
 ### 关于任务（Task）
 
-| 所用方法 |                        url                        |                      请求参数                       |  返回参数   |                             描述                             |       控制器名       | 完成 |
-| :------: | :-----------------------------------------------: | :-------------------------------------------------: | :---------: | :----------------------------------------------------------: | :------------------: | ---- |
-|   get    |               /tasks/{taskListName}               |                     taskListId                      | List<Task>  |                   获取某一个用户的总任务表                   |     getAllTasks      | 0    |
-|   get    |                 /tasks/{planName}                 |                       planId                        | List<Task>  |                   获取某一个用户的总任务表                   |     getAllTasks      | 0    |
-|   get    |               /{userId}/todayTasks                |                       userId                        | List<Task>  |                     获取某用户的今日任务                     |    getTodayTasks     | 0    |
-|   post   |            /{userId}/{taskListId}/task            |                  Task、TaskListId                   | stutus_code | 用户提交描述一个任务的表单,可以提交到各个分类(由taskListId标识)中 |       addTask        | 0    |
-|   get    |           /{userId}/{TaskListId}/tasks            |                  userId,taskListId                  | List<Task>  |  根据所提交的用户id和任务列表id获取该自定义分类下的所有任务  | getTasksByTaskListId | 0    |
-|   put    |               /{userId}/task/taskId               |                        task                         | stutus_code | 用户提交描述一个任务的表单,可以修改分类(由taskListId标识)中  |      updateTask      | 0    |
-|  delete  |             /{userId}/task/{task_Id}              |                       task_id                       | stutus_code |             根据删除的task_id删除task表中的数据              |      deleteTask      |      |
-|   put    |               /{userId}/task/taskId               |                        task                         | stutus_code | 用户提交描述一个任务的表单,可以修改分类(由taskListId标识)中  |      updateTask      | 0    |
-|   post   | /{userId}/task/{taskId}/{taskListId}/{taskListId} | taskId、taskList_Id（源列表）、taskListId（新列表） | stutus_code |              把某个task从一个分类中转移到另一个              |       moveTask       | 0    |
+| 所用方法 |          url          |                      请求参数                       |  返回参数  |                            描述                             |       控制器名       | 完成 |
+| :------: | :-------------------: | :-------------------------------------------------: | :--------: | :---------------------------------------------------------: | :------------------: | ---- |
+|   get    |       /**/tasks       |                     taskListId                      | List<Task> |                        获取全部任务                         | getTasksByTaskListId | 1    |
+|   get    |     /today/tasks      |                   token中的userId                   | List<Task> |                    获取某用户的今日任务                     |    getTodayTasks     | 1    |
+|   post   |     /**/task/new      |                  Task、TaskListId                   |  boolean   |                     添加任务到taskList                      |  addTaskToTaskList   | 1    |
+|   put    | /{userId}/task/taskId |                   task要改的信息                    |  boolean   | 用户提交描述一个任务的表单,可以修改分类(由taskListId标识)中 |      updateTask      | 0    |
+|  delete  |    /**/task/delete    |                       task_id                       |  boolean   |             根据删除的task_id删除task表中的数据             |      deleteTask      | 0    |
+|   post   |     /**/task/move     | taskId、taskList_Id（源列表）、taskListId（新列表） |  boolean   |             把某个task从一个分类中转移到另一个              |       moveTask       | 0    |
 
 
 

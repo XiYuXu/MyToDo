@@ -10,6 +10,7 @@ package com.zhou.service;
 
 import cn.dev33.satoken.stp.StpUtil;
 import com.zhou.mapper.PlanMapper;
+import com.zhou.mapper.TaskMapper;
 import com.zhou.pojo.Plan;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +20,10 @@ import java.util.Map;
 public class PlanService {
 
     PlanMapper PlanMapper;
-    public PlanService(PlanMapper planMapper){
+    TaskMapper taskMapper;
+    public PlanService(PlanMapper planMapper,TaskMapper taskMapper){
         this.PlanMapper = planMapper;
+        this.taskMapper = taskMapper;
     }
 
     //获取所有的计划
@@ -57,14 +60,12 @@ public class PlanService {
     //删除计划（级联删除）
     public boolean deletePlan(Map<String,Object> map) {
         //先删除计划表中的任务集合
-
-
-
-
-
         if(StpUtil.isLogin()) {
             int userId = Integer.parseInt(StpUtil.getLoginId().toString());
             map.put("userId",userId);
+            if(!taskMapper.deleteTaskByPlanId(map)){
+                return false;
+            }
             return PlanMapper.deletePlan(map);
         }
        return false;
