@@ -12,17 +12,18 @@ import java.util.Map;
 
 @RestController
 public class UserController {
-
     UserService userService;
 
     public UserController(UserService userService){
         this.userService = userService;
     }
+
     //获取所有用户
     @GetMapping("/users")
     public List<User> showUser(){
         return userService.getAllUsers();
     }
+
     //用户登录
     @PostMapping("/user/login")
     public boolean verifyUser(@RequestBody Map<String,Object> map){
@@ -40,6 +41,7 @@ public class UserController {
         return null;
     }
 
+    //判断是否用户名和密码重了，注册时候提出警告
     @GetMapping("/user/existUserName")
     public boolean isExistUserName(@RequestBody String userName){
         List<User> users = userService.getAllUsers();
@@ -51,6 +53,7 @@ public class UserController {
         return false;
     }
 
+    //修改密码
     @PostMapping("/setPassword")
     public boolean setPassword(@RequestBody String newPassword){
         if(userService.setPassword(newPassword)){
@@ -58,6 +61,7 @@ public class UserController {
         }
         return false;
     }
+
     //用户注册
     @PostMapping("/new")
     public boolean addUser(@RequestBody User newUser){
@@ -66,7 +70,6 @@ public class UserController {
 
     //修改用户信息
     @PutMapping("/settings/profile")
-
     public boolean  updateUserProfile(@RequestBody Map<String,Object> map){
         return userService.updateUser(map);
     }
