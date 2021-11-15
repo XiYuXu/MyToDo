@@ -20,9 +20,10 @@ public class TaskController {
         return taskService.getAllTasks();
     }
 
-    //获取用户所有的任务
-    @GetMapping("/{userId}/tasks/all")
-    public List<Task> getAllTasks(@PathVariable("userId") int userId){
+    //获取某个taskList下所有的任务
+    @GetMapping("/tasks/{taskListName}")
+    public List<Task> getTasksByTaskListId() {
+
         return null;
     }
 

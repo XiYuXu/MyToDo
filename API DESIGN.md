@@ -34,7 +34,8 @@
 
 | 所用方法 |                        url                        |                      请求参数                       |  返回参数   |                             描述                             |       控制器名       | 完成 |
 | :------: | :-----------------------------------------------: | :-------------------------------------------------: | :---------: | :----------------------------------------------------------: | :------------------: | ---- |
-|   get    |                /{userId}/allTasks                 |                       userId                        | List<Task>  |                   获取某一个用户的总任务表                   |     getAllTasks      | 0    |
+|   get    |               /tasks/{taskListName}               |                     taskListId                      | List<Task>  |                   获取某一个用户的总任务表                   |     getAllTasks      | 0    |
+|   get    |                 /tasks/{planName}                 |                       planId                        | List<Task>  |                   获取某一个用户的总任务表                   |     getAllTasks      | 0    |
 |   get    |               /{userId}/todayTasks                |                       userId                        | List<Task>  |                     获取某用户的今日任务                     |    getTodayTasks     | 0    |
 |   post   |            /{userId}/{taskListId}/task            |                  Task、TaskListId                   | stutus_code | 用户提交描述一个任务的表单,可以提交到各个分类(由taskListId标识)中 |       addTask        | 0    |
 |   get    |           /{userId}/{TaskListId}/tasks            |                  userId,taskListId                  | List<Task>  |  根据所提交的用户id和任务列表id获取该自定义分类下的所有任务  | getTasksByTaskListId | 0    |
