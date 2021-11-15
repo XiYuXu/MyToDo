@@ -8,6 +8,6 @@ import java.util.List;
 
 @Mapper
 public interface TaskMapper {
-    public List<Task> getAllTasks();
+    List<Task> getAllTasks();
 
 }

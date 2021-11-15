@@ -9,8 +9,8 @@
     </resultMap>
     <!--查询所有的任务集-->
     <select id="getAllTaskLists" resultMap="taskListStruct">
-       select task_list_id,title,description,deleted,user_id
-       from tasklist
+        select task_list_id,title,description,deleted,user_id
+        from tasklist
     </select>
     <!--查询个人任务集-->
     <select id="getOwnTaskList" resultMap="taskListStruct">

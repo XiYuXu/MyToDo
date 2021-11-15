@@ -22,4 +22,6 @@ public class Task {
     private boolean important; //是否重要
     private LocalDateTime end_time; //结束时间
     private LocalDateTime start_time; //开始时间
+    private int taskListId; //所属任务集id
+    private int planId; //所属计划Id
 }

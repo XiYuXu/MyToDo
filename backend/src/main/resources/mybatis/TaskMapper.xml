@@ -5,23 +5,31 @@
 <mapper namespace="com.zhou.mapper.TaskMapper">
     <resultMap id="TaskStruct" type="com.zhou.pojo.Task">
         <id column="task_id" property="taskId"></id>
-        <id column="user_id" property="userId"></id>
-        <id column="father_task_id" property="fatherTaskId"></id>
+        <id column="task_list_id" property="taskListId"></id>
+        <id column="plan_id" property="planId"></id>
     </resultMap>
     <!--查询所有的任务-->
     <select id="getAllTasks" resultMap="TaskStruct">
-        select task_id,title,description,deleted,user_id,
+        select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id
         from task
     </select>
-    <!--查询个人全部任务-->
-    <select id="getOwnTask" resultMap="TaskStruct">
-        select task_id,title,description,deleted,user_id,father_task_id
+    <!--查询某个taskList下全部任务-->
+    <select id="getTasksByTaskList" resultMap="TaskStruct">
+        select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id
         from task
-        where user_id=#{userId}
+        where task_list_id=#{taskListId}
     </select>
+    <!--查询某个Plan下全部任务-->
+    <select id="getTasksByPlan" resultMap="TaskStruct">
+        select task_id,title,description,icon,finished,important,end_time,start_time,plan_id,task_list_id
+        from task
+        where plan_id=#{planId}
+    </select>
+
     <!--插入新的任务到某个taskList或者plan中-->
     <insert id="addTask" parameterType="map">
-        insert into task(title,description,user_id,father_task_id) values (#{title},#{description},#{userId},#{fatherTaskId})
+        insert into task(title,description,icon,end_time,start_time,plan_id,task_list_id)
+        values(#{title},#{description},#{icon},#{endTime},#{startTime},#{planId},#{taskListId})
     </insert>
 
     <!--修改任务状态-->
@@ -30,7 +38,11 @@
         <set>
             <if test="title != null">title=#{title},</if>
             <if test="description != null">description=#{description},</if>
-            <if test="deleted != null">deleted=#{deleted},</if>
+            <if test="finished != null">deleted=#{finished},</if>
+            <if test="endTime != null">deleted=#{endTime},</if>
+            <if test="startTime != null">deleted=#{startTime},</if>
+            <if test="planId != null">deleted=#{planId},</if>
+            <if test="taskListId != null">deleted=#{taskListId},</if>
         </set>
         where user_id=#{userId} and task_id=#{taskId}
     </update>
@@ -38,7 +50,7 @@
     <!--删除任务-->
     <delete id="deleteTask">
         delete from task
-        where user_id=#{userId} and (father_task_id = #{taskId} or task_id = #{taskId})
+        where taskListId=#{taskListId}
     </delete>
 
 </mapper>
